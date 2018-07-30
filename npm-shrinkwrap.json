@@ -354,7 +354,7 @@
       }
     },
     "@types/lodash": {
-      "version": "4.14.114"
+      "version": "4.14.115"
     },
     "@types/mocha": {
       "version": "5.2.5"
@@ -362,11 +362,11 @@
     "@types/nock": {
       "version": "9.3.0",
       "requires": {
-        "@types/node": "10.5.3"
+        "@types/node": "10.5.4"
       }
     },
     "@types/node": {
-      "version": "10.5.3"
+      "version": "10.5.4"
     },
     "@types/sinon": {
       "version": "5.0.1"
@@ -954,10 +954,11 @@
       }
     },
     "ecc-jsbn": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "optional": true,
       "requires": {
-        "jsbn": "0.1.1"
+        "jsbn": "0.1.1",
+        "safer-buffer": "2.1.2"
       }
     },
     "ecdsa-sig-formatter": {
@@ -1063,10 +1064,10 @@
       "version": "1.2.0",
       "requires": {
         "@types/chai": "4.1.4",
-        "@types/lodash": "4.14.114",
+        "@types/lodash": "4.14.115",
         "@types/mocha": "5.2.5",
         "@types/nock": "9.3.0",
-        "@types/node": "10.5.3",
+        "@types/node": "10.5.4",
         "@types/sinon": "5.0.1",
         "lodash": "4.17.10",
         "mock-stdin": "0.3.1",
@@ -4999,7 +5000,7 @@
         "assert-plus": "1.0.0",
         "bcrypt-pbkdf": "1.0.2",
         "dashdash": "1.14.1",
-        "ecc-jsbn": "0.1.1",
+        "ecc-jsbn": "0.1.2",
         "getpass": "0.1.7",
         "jsbn": "0.1.1",
         "safer-buffer": "2.1.2",
