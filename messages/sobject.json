@@ -1,0 +1,5 @@
+{
+  "commandDescription": "Generates a typescript type for a Salesforce sobject!",
+  "sobjectFlagDescription": "the sobject to describe and generate a type for",
+  "directoryFlagDescription": "the output directory to put the generated types"
+}

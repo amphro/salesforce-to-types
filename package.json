@@ -1,0 +1,66 @@
+{
+  "name": "salesforce-to-types",
+  "version": "0.0.0",
+  "author": "Thomas @amphro",
+  "bugs": "https://github.com/amphro/salesforce-to-types/issues",
+  "dependencies": {
+    "@oclif/command": "1",
+    "@oclif/config": "1",
+    "@oclif/errors": "1",
+    "@salesforce/command": "0.1.6",
+    "lodash": "^4.17.10",
+    "tslib": "1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "1",
+    "@oclif/plugin-help": "1",
+    "@oclif/test": "^1",
+    "@salesforce/dev-config": "1.1.0",
+    "@types/chai": "4",
+    "@types/jsforce": "1.8.13",
+    "@types/mocha": "5",
+    "@types/node": "10",
+    "chai": "^4",
+    "globby": "8",
+    "mocha": "^5",
+    "nyc": "^12",
+    "sinon": "5",
+    "ts-node": "6",
+    "typescript": "2.9"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/lib",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/amphro/salesforce-to-types",
+  "keywords": [
+    "sfdx-plugin"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "sfdx",
+    "topics": {
+      "types": {
+        "description": "Generate typescript types from different Salesforce resources."
+      }
+    },
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "amphro/salesforce-to-types",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json npm-shrinkwrap.json",
+    "posttest": "tsc -p test --noEmit && tslint -p test -t stylish",
+    "prepack": "rm -rf lib && tsc && oclif-dev manifest && oclif-dev readme && npm shrinkwrap",
+    "prepare": "rm -rf lib && tsc && oclif-dev manifest && oclif-dev readme && npm shrinkwrap",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  }
+}
