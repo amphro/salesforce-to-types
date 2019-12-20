@@ -1,13 +1,15 @@
-import { core, flags, SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
+import { fs, Messages } from '@salesforce/core';
+import { AnyJson } from '@salesforce/ts-types';
 import { some } from 'lodash';
 import { join } from 'path';
 
 // Initialize Messages with the current plugin directory
-core.Messages.importMessagesDirectory(__dirname);
+Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = core.Messages.loadMessages('salesforce-to-types', 'sobject');
+const messages = Messages.loadMessages('salesforce-to-types', 'sobject');
 
 const header = `
 /**
@@ -40,12 +42,11 @@ export default class Org extends SfdxCommand {
 
   protected static flagsConfig = {
     // flag with a value (-n, --name=VALUE)
-    outputdir: {
-      type: 'directory',
+    outputdir: flags.directory({
       char: 'o',
       description: messages.getMessage('directoryFlagDescription'),
       default: './src/types'
-    },
+    }),
     sobject: flags.string({
       char: 's',
       description: messages.getMessage('sobjectFlagDescription'),
@@ -58,7 +59,7 @@ export default class Org extends SfdxCommand {
 
   private createdFiles = [];
 
-  public async run(): Promise<core.AnyJson> {
+  public async run(): Promise<AnyJson> {
     await this.createBaseSObjectType();
     await this.generateSObjectType();
 
@@ -76,10 +77,10 @@ export default class Org extends SfdxCommand {
   }
 
   private async createBaseSObjectType() {
-    const dir = await core.fs.readdir(this.flags.outputdir);
+    const dir = await fs.readdir(this.flags.outputdir);
     if (!some(dir, fileName => fileName === 'sobject.ts')) {
       const filePath = join(this.flags.outputdir, 'sobject.ts');
-      await core.fs.writeFile(filePath, sobject);
+      await fs.writeFile(filePath, sobject);
       this.createdFiles.push(filePath);
     }
   }
@@ -112,7 +113,7 @@ export default class Org extends SfdxCommand {
     typeContents += '\n}\n';
 
     const filePath = join(this.flags.outputdir, `${pascalObjectName.toLowerCase()}.ts`);
-    await core.fs.writeFile(filePath, typeContents);
+    await fs.writeFile(filePath, typeContents);
     this.createdFiles.push(filePath);
   }
 }

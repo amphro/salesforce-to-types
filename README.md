@@ -18,23 +18,34 @@ $ sfdx types:sobject:create -s Account
 ```
 
 <!-- commands -->
-* [`sfdx types:sobject:create`](#sfdx-typessobjectcreate)
+* [`sfdx types:sobject:create -s <string> [-o <directory>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-typessobjectcreate--s-string--o-directory--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx types:sobject:create`
+## `sfdx types:sobject:create -s <string> [-o <directory>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Generates a typescript type for a Salesforce sobject!
 
 ```
 USAGE
-  $ sfdx types:sobject:create
+  $ sfdx types:sobject:create -s <string> [-o <directory>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -o, --outputdir=outputdir                       [default: ./src/types] the output directory to put the generated types
-  -s, --sobject=sobject                           (required) the sobject to describe and generate a type for
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -o, --outputdir=outputdir                                                         [default: ./src/types] the output
+                                                                                    directory to put the generated types
+
+  -s, --sobject=sobject                                                             (required) the sobject to describe
+                                                                                    and generate a type for
+
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   $ sfdx types:sobject:create --sobject Account
