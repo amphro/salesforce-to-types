@@ -2,10 +2,8 @@ salesforce-to-types
 =================
 
 [![Version](https://img.shields.io/npm/v/salesforce-to-types.svg)](https://npmjs.org/package/salesforce-to-types)
-[![CircleCI](https://circleci.com/gh/amphro/salesforce-to-types/tree/master.svg?style=shield)](https://circleci.com/gh/amphro/salesforce-to-types/tree/master)
+[![CI](https://github.com/amphro/salesforce-to-types/workflows/CI/badge.svg)](https://github.com/amphro/salesforce-to-types/actions?query=workflow%3ACI)
 [![Codecov](https://codecov.io/gh/amphro/salesforce-to-types/branch/master/graph/badge.svg)](https://codecov.io/gh/amphro/salesforce-to-types)
-[![Greenkeeper](https://badges.greenkeeper.io/amphro/salesforce-to-types.svg)](https://greenkeeper.io/)
-[![Known Vulnerabilities](https://snyk.io/test/github/amphro/salesforce-to-types/badge.svg)](https://snyk.io/test/github/amphro/salesforce-to-types)
 [![Downloads/week](https://img.shields.io/npm/dw/salesforce-to-types.svg)](https://npmjs.org/package/salesforce-to-types)
 [![License](https://img.shields.io/npm/l/salesforce-to-types.svg)](https://github.com/amphro/salesforce-to-types/blob/master/package.json)
 
