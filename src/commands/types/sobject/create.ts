@@ -1,13 +1,15 @@
-import { core, flags, SfdxCommand } from '@salesforce/command';
-import { some } from 'lodash';
+import { flags, SfdxCommand } from '@salesforce/command';
+import { fs, Messages } from '@salesforce/core';
+import { lowerFirst, upperFirst } from '@salesforce/kit';
+import { AnyJson } from '@salesforce/ts-types';
 import { join } from 'path';
 
 // Initialize Messages with the current plugin directory
-core.Messages.importMessagesDirectory(__dirname);
+Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = core.Messages.loadMessages('salesforce-to-types', 'sobject');
+const messages = Messages.loadMessages('salesforce-to-types', 'sobject');
 
 const header = `
 /**
@@ -29,6 +31,11 @@ export interface SObject {
 }
 `;
 
+export type ObjectClassInfo = {
+  filePath: string,
+  className: string
+};
+
 export default class Org extends SfdxCommand {
 
   public static description = messages.getMessage('commandDescription');
@@ -40,12 +47,11 @@ export default class Org extends SfdxCommand {
 
   protected static flagsConfig = {
     // flag with a value (-n, --name=VALUE)
-    outputdir: {
-      type: 'directory',
+    outputdir: flags.directory({
       char: 'o',
       description: messages.getMessage('directoryFlagDescription'),
       default: './src/types'
-    },
+    }),
     sobject: flags.string({
       char: 's',
       description: messages.getMessage('sobjectFlagDescription'),
@@ -56,16 +62,19 @@ export default class Org extends SfdxCommand {
   // Comment this out if your command does not require an org username
   protected static requiresUsername = true;
 
-  private createdFiles = [];
+  private createdFiles: ObjectClassInfo[] = [];
 
-  public async run(): Promise<core.AnyJson> {
+  public async run(): Promise<AnyJson> {
     await this.createBaseSObjectType();
     await this.generateSObjectType();
 
     if (this.createdFiles.length > 0) {
       this.ux.styledHeader('Create types');
-      this.ux.table(this.createdFiles.map(filePath => ({ file: filePath })), {
-        columns: [{key: 'file', label: 'Output file path'}]
+      this.ux.table(this.createdFiles, {
+        columns: [
+          {key: 'filePath', label: 'Output file path'},
+          {key: 'className', label: 'Class name'}
+        ]
       });
     } else {
       this.ux.log('No types created.');
@@ -76,11 +85,11 @@ export default class Org extends SfdxCommand {
   }
 
   private async createBaseSObjectType() {
-    const dir = await core.fs.readdir(this.flags.outputdir);
-    if (!some(dir, fileName => fileName === 'sobject.ts')) {
+    const dir = await fs.readdir(this.flags.outputdir);
+    if (!dir.find(fileName => fileName === 'sobject.ts')) {
       const filePath = join(this.flags.outputdir, 'sobject.ts');
-      await core.fs.writeFile(filePath, sobject);
-      this.createdFiles.push(filePath);
+      await fs.writeFile(filePath, sobject);
+      this.createdFiles.push({ filePath, className: 'SObject'});
     }
   }
 
@@ -88,7 +97,14 @@ export default class Org extends SfdxCommand {
     const conn = this.org.getConnection();
     const objectName: string = this.flags.sobject;
     const describe = await conn.describe(objectName);
-    const pascalObjectName = objectName.replace('__c', '').replace('_', '');
+    // Turn myNamespace__my_class__c => MyNamespaceMyClass
+    const pascalObjectName = objectName
+      // Capitalize all words
+      .replace(/[a-zA-Z0-9-]+_/g, upperFirst)
+      // Remove end
+      .replace(/__c$/, '')
+      // Replace all underscores
+      .replace(/_/g, '');
 
     let typeContents = `${header}\nimport { SObject } from \'./sobject\';`;
 
@@ -111,8 +127,8 @@ export default class Org extends SfdxCommand {
     });
     typeContents += '\n}\n';
 
-    const filePath = join(this.flags.outputdir, `${pascalObjectName.toLowerCase()}.ts`);
-    await core.fs.writeFile(filePath, typeContents);
-    this.createdFiles.push(filePath);
+    const filePath = join(this.flags.outputdir, `${lowerFirst(pascalObjectName)}.ts`);
+    await fs.writeFile(filePath, typeContents);
+    this.createdFiles.push({ filePath, className: pascalObjectName });
   }
 }
