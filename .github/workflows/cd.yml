@@ -14,15 +14,17 @@ jobs:
           node-version: "10.x"
           registry-url: https://registry.npmjs.org/
       - run: echo Supplied Tag - ${GITHUB_REF}
-      - run: echo Generated Version - ${GITHUB_REF#v}
-      - run: yarn version --new-version ${GITHUB_REF#v}
+      - run: echo Generated Version - ${GITHUB_REF#refs/tags/v}
+      # Will fail fast if version is invalid
+      # This also has to be done before install so oclif.manifest is generated properly
+      - run: yarn version --new-version ${GITHUB_REF#refs/tags/v}
       - run: yarn install
-      - run: yarn publish --new-version ${GITHUB_REF#v}
+      - run: yarn publish --new-version ${GITHUB_REF#refs/tags/v}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: actions/setup-node@v1
         with:
           registry-url: "https://npm.pkg.github.com"
-      - run: yarn publish --new-version ${GITHUB_REF#v}
+      - run: yarn publish --new-version ${GITHUB_REF#refs/tags/v}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
