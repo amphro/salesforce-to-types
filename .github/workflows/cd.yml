@@ -15,8 +15,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: echo Supplied Tag - ${GITHUB_REF}
       - run: echo Generated Version - ${GITHUB_REF#refs/tags/v}
-      - run: yarn install
-      - run: yarn version --new-version ${GITHUB_REF#refs/tags/v}
+      - run: yarn install && yarn postpack
+      - run: yarn version --new-version ${GITHUB_REF#refs/tags/v} --no-git-tag-version
       - run: yarn publish --new-version ${GITHUB_REF#refs/tags/v}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
