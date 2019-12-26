@@ -13,6 +13,9 @@ jobs:
         with:
           node-version: "10.x"
           registry-url: https://registry.npmjs.org/
+      - run: echo Supplied Tag - ${GITHUB_REF}
+      - run: echo Generated Version - ${GITHUB_REF#v}
+      - run: yarn version --new-version ${GITHUB_REF#v}
       - run: yarn install
       - run: yarn publish --new-version ${GITHUB_REF#v}
         env:

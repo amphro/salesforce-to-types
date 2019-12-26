@@ -1,6 +1,6 @@
 {
   "name": "salesforce-to-types",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Thomas @amphro",
   "bugs": "https://github.com/amphro/salesforce-to-types/issues",
   "dependencies": {

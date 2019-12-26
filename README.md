@@ -50,7 +50,7 @@ EXAMPLES
   $ sfdx types:sobject:create --sobject MyCustomObject__c --directory types/ --targetusername myOrg@example.com
 ```
 
-_See code: [src/commands/types/sobject/create.ts](https://github.com/amphro/salesforce-to-types/blob/v0.0.0/src/commands/types/sobject/create.ts)_
+_See code: [src/commands/types/sobject/create.ts](https://github.com/amphro/salesforce-to-types/blob/v0.1.0/src/commands/types/sobject/create.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
