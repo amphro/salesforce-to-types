@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install yarn
+      run: npm install -g yarn
+    - name: Install deps
+      run: yarn install
+    - name: Test
+      run: yarn test
