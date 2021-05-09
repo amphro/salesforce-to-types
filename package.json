@@ -11,7 +11,7 @@
     "@salesforce/core": "^2.1.5",
     "@salesforce/kit": "^1.2.1",
     "@salesforce/ts-types": "^1.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
